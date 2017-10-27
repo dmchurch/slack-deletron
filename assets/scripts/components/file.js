@@ -33,6 +33,10 @@ class File extends Component {
 		if (this.props.details.name && this.props.details.name != this.props.details.title) {
 			fileName = <h4>{this.props.details.name}</h4>
 		}
+		let fileSize = formatBytes(this.props.details.size);
+		if (this.props.details.is_external) {
+			fileSize = `externally hosted (${fileSize})`;
+		}
 		return (
 			<div className="fileDetails">
 				<div className="fileContent">
@@ -40,7 +44,7 @@ class File extends Component {
 					{previewCode}
 					<h3><a href={this.props.details.permalink} target="_blank">{this.props.details.title ? emoji.emojify(decode(this.props.details.title)) : 'No title'}</a></h3>
 					{fileName}
-					<p className="fileMeta"><span className="fileType">{this.props.details.filetype}</span> / {formatBytes(this.props.details.size)}</p>
+					<p className="fileMeta"><span className="fileType">{this.props.details.filetype}</span> / {fileSize}</p>
 					<p className="fileDate" title={moment.unix(this.props.details.created).format("LL LTS")}>{moment.unix(this.props.details.created).fromNow()}</p>
 				</div>
 				<button className="deleteFile" onClick={this.destroyFile.bind(this)}>delete</button>
