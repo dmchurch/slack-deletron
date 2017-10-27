@@ -71,7 +71,7 @@ class FileDisplay extends Component {
       >
 				{this.props.fileGroup.fileList.sort(this.sortCompare.bind(this)).map((obj, i) => {
 					return (
-						<article key={i} className="fileCard">
+						<article key={obj.id} className="fileCard">
 							<File details={obj} />
 						</article>
 					)
