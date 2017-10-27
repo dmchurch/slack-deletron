@@ -20,6 +20,12 @@ class File extends Component {
 		let previewImage;
 		if (this.props.details.mimetype.includes('image')) {
 			previewImage = <div className="previewImg"><a href={this.props.details.url_private} target="_blank"><img src={this.props.details.thumb_360}/></a></div>;
+		} else if (this.props.details.mimetype.includes('video') && this.props.details.url_private) {
+			if (this.props.details.thumb_video) {
+				previewImage = <video preload="none" poster={this.props.details.thumb_video} controls><source src={this.props.details.url_private} type={this.props.details.mimetype}/></video>
+			} else {
+				previewImage = <video controls><source src={this.props.details.url_private} type={this.props.details.mimetype}/></video>
+			}
 		} else {
 			previewImage = null
 		}

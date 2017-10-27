@@ -11,6 +11,7 @@ class FileSearch extends Component {
 			searchType: 'all',
 			all: true,
 			images: false,
+			videos: false,
 			snippets: false,
 			gdocs: false,
 			zips: false,
@@ -33,6 +34,8 @@ class FileSearch extends Component {
 			let fileTypes = [];
 			if(this.state.images)
 				fileTypes.push('images')
+			if(this.state.videos)
+				fileTypes.push('videos')
 			if(this.state.gdocs)
 				fileTypes.push('gdocs')
 			if(this.state.pdfs)
@@ -147,6 +150,16 @@ class FileSearch extends Component {
 								type="checkbox"
 								value="images"
 								checked={this.state.images}
+								onChange={this.handleClick.bind(this)} />
+						</div>
+						<div className="check-row">
+							<label htmlFor="images">Videos</label>
+							<input
+								id="videos"
+								name="videos"
+								type="checkbox"
+								value="videos"
+								checked={this.state.videos}
 								onChange={this.handleClick.bind(this)} />
 						</div>
 						<div className="check-row">
