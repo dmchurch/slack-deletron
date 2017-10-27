@@ -76,7 +76,7 @@ class FileSearch extends Component {
 			if (profileData.user.is_admin) {
 				whoFiles = (
 					<div className="field">
-						<label>Who's files should we be looking for?</label>
+						<label>Whose files should we be looking for?</label>
 						<select className="dropdown" value={this.state.searchType} onChange={this.handleWhoChange.bind(this)}>
 							<option value='all'>All public team files</option>
 							<option value={profileData.user.id}>Just your files</option>
