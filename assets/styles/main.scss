@@ -200,12 +200,18 @@ article.fileCard {
 		justify-content: center;
 	}
 	h3 {
-		word-break: break-all;
 		font-weight: 700;
 		a {
 			color: #111;
 			text-decoration: none;
 		}
+	}
+
+	h4 {
+		font-size: 1.4rem;
+		word-break: break-all;
+		font-weight: 500;
+		margin-top: 0;
 	}
 	
 	.fileType {

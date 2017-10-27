@@ -27,12 +27,17 @@ class File extends Component {
 		} else {
 			previewCode = null
 		}
+		let fileName;
+		if (this.props.details.name && this.props.details.name != this.props.details.title) {
+			fileName = <h4>{this.props.details.name}</h4>
+		}
 		return (
 			<div className="fileDetails">
 				<div className="fileContent">
 					{previewImage}
 					{previewCode}
-					<h3><a href={this.props.details.permalink} target="_blank">{this.props.details.name ? this.props.details.name : 'No filename'}</a></h3>
+					<h3><a href={this.props.details.permalink} target="_blank">{this.props.details.title ? this.props.details.title : 'No title'}</a></h3>
+					{fileName}
 					<p className="fileMeta"><span className="fileType">{this.props.details.filetype}</span> / {formatBytes(this.props.details.size)}</p>
 					<p className="fileDate">{moment.unix(this.props.details.created).fromNow()}</p>
 				</div>
