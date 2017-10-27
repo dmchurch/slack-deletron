@@ -12,6 +12,10 @@ class FileDisplay extends Component {
 
 	constructor(props) {
 		super(props)
+		this.state = {
+			sort: "created",
+			sortAscending: false
+		}
 	}
 
 	destroyAll() {
@@ -21,9 +25,41 @@ class FileDisplay extends Component {
 		// this.props.destroyFile(this.props.authData.token, this.props.details.id);
 	}
 
+	handleSortChange(e) {
+		let [sort, ascending] = e.target.value.split(':');
+		this.setState({
+			sort: sort,
+			sortAscending: (ascending == '+')
+		});
+	}
+
+	sortCompare(a, b) {
+		a = a[this.state.sort]
+		b = b[this.state.sort]
+		let compare = 0;
+		if (a < b) {
+			compare = -1;
+		} else if (a > b) {
+			compare = 1;
+		}
+		if (!this.state.sortAscending) {
+			compare = -compare;
+		}
+		return compare;
+	}
+
 	displayFiles() {
 		return (
 			<div>
+			<div className="sortPage">
+				<label>Sort this page by:</label>
+				<select className="dropdown" value={this.state.sort+":"+(this.state.sortAscending?'+':'-')} onChange={this.handleSortChange.bind(this)}>
+					<option value='created:-'>Date Created (new to old)</option>
+					<option value='created:+'>Date Created (old to new)</option>
+					<option value='size:-'>Size (large to small)</option>
+					<option value='size:+'>Size (small to large)</option>
+				</select>
+			</div>
 			<div className="removeAll">
 				<h3>Remove all files?</h3>
 				<button onClick={this.destroyAll.bind(this)} className="deleteFile">Delete all files below</button>
@@ -33,7 +69,7 @@ class FileDisplay extends Component {
 	      options={masonryOptions} // default {}
 	      disableImagesLoaded={false} // default false
       >
-				{this.props.fileGroup.fileList.map((obj, i) => {
+				{this.props.fileGroup.fileList.sort(this.sortCompare.bind(this)).map((obj, i) => {
 					return (
 						<article key={i} className="fileCard">
 							<File details={obj} />
