@@ -39,7 +39,7 @@ class File extends Component {
 					<h3><a href={this.props.details.permalink} target="_blank">{this.props.details.title ? this.props.details.title : 'No title'}</a></h3>
 					{fileName}
 					<p className="fileMeta"><span className="fileType">{this.props.details.filetype}</span> / {formatBytes(this.props.details.size)}</p>
-					<p className="fileDate">{moment.unix(this.props.details.created).fromNow()}</p>
+					<p className="fileDate" title={moment.unix(this.props.details.created).format("LL LTS")}>{moment.unix(this.props.details.created).fromNow()}</p>
 				</div>
 				<button className="deleteFile" onClick={this.destroyFile.bind(this)}>delete</button>
 			</div>
