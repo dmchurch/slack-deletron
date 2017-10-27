@@ -18,9 +18,10 @@ export function fetchProfile(token, user) {
 	}
 }
 
-export function fetchFiles(token, types, userID) {
+export function fetchFiles(token, types, userID, page) {
 	let data = {
 		token: token,
+		page: page,
 		types: types
 	}
 	if (userID !== 'all')

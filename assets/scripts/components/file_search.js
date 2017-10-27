@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import ReactPaginate from 'react-paginate';
 import * as actions from '../actions';
 
 class FileSearch extends Component {
@@ -14,12 +15,14 @@ class FileSearch extends Component {
 			gdocs: false,
 			zips: false,
 			pdfs: false,
+			page: 1,
 			fileList: 0
 		}
 	}
 
 	getFiles() {
 		let token = this.props.authData.token;
+		let page = this.state.page;
 		let fileString, userID;
 		if (this.props.profile.user.is_admin === false) {
 			userID = this.props.authData.profile.id
@@ -42,7 +45,17 @@ class FileSearch extends Component {
 		} else {
 			fileString = 'all'
 		}
-		this.props.fetchFiles(token, fileString, userID);
+		this.props.fetchFiles(token, fileString, userID, page);
+	}
+
+	handleSearchClick() {
+		this.state.page = 1;
+		this.getFiles();
+	}
+
+	handlePageClick(data) {
+		this.state.page = data.selected + 1;
+		this.getFiles();
 	}
 
 	handleWhoChange(e) { 
@@ -86,8 +99,26 @@ class FileSearch extends Component {
 			}
 		}
 		let fileDisplay = null;
+		let pagination = null;
 		if (typeof this.props.files.fileList !== 'undefined' && this.props.files.fileList.length > 0) {
-			fileDisplay = <p className="fileNum">You've got {this.props.files.fileList.length} files</p>
+			if (this.props.files.paging.total > this.props.files.fileList.length) {
+				fileDisplay = <p className="fileNum">You've got {this.props.files.paging.total} files, showing {this.props.files.fileList.length}</p>
+				pagination = <div className="pagination">
+						<ReactPaginate
+							pageCount={this.props.files.paging.pages}
+							forcePage={this.state.page-1}
+							pageRangeDisplayed={3}
+							marginPagesDisplayed={2}
+							onPageChange={this.handlePageClick.bind(this)}
+							disableInitialCallback
+							previousLabel="←"
+							nextLabel="→"
+							breakLabel="…"
+						/>
+					</div>
+			} else {
+				fileDisplay = <p className="fileNum">You've got {this.props.files.paging.total} files</p>
+			}
 		} else if (typeof this.props.files.fileList !== 'undefined' && this.props.files.fileList.length === 0) {
 			fileDisplay = <p>No files! Search again for some more!</p>
 		}
@@ -160,8 +191,9 @@ class FileSearch extends Component {
 						</div>
 					</div>
 				</form>
-				<button className="search" onClick={this.getFiles.bind(this)}>Get Files</button>
+				<button className="search" onClick={this.handleSearchClick.bind(this)}>Get Files</button>
 				{fileDisplay}
+				{pagination}
 				<footer className="footerdetails">
 					<p><a href="http://drewminns.com">drew minns</a> built this</p>
 					<p>Help improve it <a href="https://github.com/drewminns/slack">here</a></p>

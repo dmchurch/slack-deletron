@@ -55,6 +55,7 @@
     "react": "^15.0.1",
     "react-dom": "^15.0.1",
     "react-masonry-component": "^4.0.0",
+    "react-paginate": "^4.4.4",
     "react-redux": "^4.4.4",
     "redux": "^3.4.0",
     "redux-promise": "^0.5.3",
