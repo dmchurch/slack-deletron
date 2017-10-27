@@ -17,7 +17,7 @@ class File extends Component {
 	render() {
 		let previewImage;
 		if (this.props.details.mimetype.includes('image')) {
-			previewImage = <div className="previewImg"><img src={this.props.details.thumb_360}/></div>;
+			previewImage = <div className="previewImg"><a href={this.props.details.url_private} target="_blank"><img src={this.props.details.thumb_360}/></a></div>;
 		} else {
 			previewImage = null
 		}
