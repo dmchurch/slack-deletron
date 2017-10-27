@@ -3,7 +3,7 @@ import axios from 'axios';
 import { FETCH_AUTH, FETCH_PROFILE, FETCH_FILES, DESTROY_FILE } from './types';
 
 export function fetchAuth() {
-	const request = axios.get('/auth')
+	const request = axios.get(window.deletron_prefix+'/auth')
 	return {
 		type: FETCH_AUTH,
 		payload: request

@@ -14,11 +14,11 @@ module.exports = (app, passport) => {
 	app.get('/auth/slack/callback', passport.authenticate('slack', {
 	  failureRedirect: '/'
 	}), (req, res) => {
-	  res.redirect('/hooray')
+	  res.redirect((process.env.ABSOLUTE_PREFIX||'')+'/hooray')
 	});
 
 	app.get('/hooray', ensureAuthenticated, (req, res) => {
-		res.render('app', {profileName: req.user.profile.displayName})
+		res.render('app', {profileName: req.user.profile.displayName, prefix:process.env.ABSOLUTE_PREFIX||''})
 	});
 
 	app.get('/auth', ensureAuthenticated, (req, res) => {
@@ -31,5 +31,5 @@ function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   }
-  res.redirect('/')
+  res.redirect((process.env.ABSOLUTE_PREFIX||'')+'/')
 }
